@@ -6,7 +6,7 @@
 // .
 //
 
-#import "SliderThumbView.h"
+#import <ASRangeSlider/SliderThumbView.h>
 #import "UIViewExtensions.h"
 
 @interface SliderThumbView()
@@ -30,7 +30,7 @@
 		self.textLabel.backgroundColor = [UIColor clearColor];
 		self.textLabel.textColor = [UIColor whiteColor];
 		self.textLabel.adjustsFontSizeToFitWidth = YES;
-		self.textLabel.textAlignment = UITextAlignmentCenter;
+		self.textLabel.textAlignment = NSTextAlignmentCenter;
 		[self addSubview:textLabel];
 		self.textLabel.center = self.centerOfBounds;
 	}
@@ -39,8 +39,8 @@
 
 -(id) init
 {
-	[self initWithBackgroundImage:[UIImage imageNamed:@"slider-handle.png"]];
-	return self;
+    self = [self initWithBackgroundImage:[UIImage imageNamed:@"slider-handle.png"]];
+    return self;
 }
 
 -(void) setBackgroundImage : (UIImage *) image
@@ -51,20 +51,12 @@
 	self.center = center;
 	[self.backgroundView removeFromSuperview];
 	self.backgroundView = newOne;
-	[newOne release];
 	
 	[self addSubview:self.backgroundView];
 	self.backgroundView.center = self.centerOfBounds;
 	self.textLabel.frame = self.backgroundView.frame;
 	self.textLabel.center = self.centerOfBounds;
 	[self bringSubviewToFront:self.textLabel];
-}
-
-- (void)dealloc
-{
-	[backgroundView release];
-	[textLabel release];
-	[super dealloc];
 }
 
 @end

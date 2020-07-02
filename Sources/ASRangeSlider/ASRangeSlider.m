@@ -6,8 +6,8 @@
 // .
 //
 
-#import "ASRangeSlider.h"
-#import "SliderThumbView.h"
+#import <ASRangeSlider/ASRangeSlider.h>
+#import <ASRangeSlider/SliderThumbView.h>
 #import "UIViewExtensions.h"
 
 #define DEFAULT_TRACK_IMAGE @"slider-track-right.png"
@@ -48,10 +48,7 @@ FloatRange FloatRangeMake(float min , float max)
 @synthesize thumbTwo;
 @synthesize spectrum;
 @synthesize leftmostPointOnTrack;
-@synthesize rightmostPointOnTrack;
 
-#pragma -
-#pragma Properties
 -(FloatRange) value
 {
 	float one = self.valueOfSliderThumbOne;
@@ -120,8 +117,7 @@ FloatRange FloatRangeMake(float min , float max)
 
 -(void) setValue : (float) value forThumb : (SliderThumbView *) thumb
 {
-	float toSet = MIN(self.maximumValue, value);
-	toSet = MAX(self.minimumValue, value);
+	float toSet = MAX(self.minimumValue, value);
 	
 	if (toSet != [self valueForThumb:thumb])
 	{
@@ -130,7 +126,6 @@ FloatRange FloatRangeMake(float min , float max)
 		float newPosition = relativePosition + self.leftmostPointOnTrack;
 		thumb.center = CGPointMake(newPosition, thumb.center.y);
 		[self updateSubviews];
-		[self sendActionsForControlEvents:UIControlEventValueChanged];
 	}
 }
 
@@ -177,9 +172,6 @@ FloatRange FloatRangeMake(float min , float max)
 	}
 }
 
-#pragma -
-#pragma Initialization
-
 -(id) initWithSpectrum:(FloatRange)aSpectrum
 {
 	self = [super init];
@@ -220,11 +212,9 @@ FloatRange FloatRangeMake(float min , float max)
 {
 	UIPanGestureRecognizer *pgr = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
 	[self.thumbOne addGestureRecognizer:pgr];
-	[pgr release];
 	
 	pgr = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
 	[self.thumbTwo addGestureRecognizer:pgr];
-	[pgr release];
 }
 
 -(void) handlePan:(UIPanGestureRecognizer *)recognizer
@@ -245,6 +235,8 @@ FloatRange FloatRangeMake(float min , float max)
 		float value = (relativePosition * (self.maximumValue - self.minimumValue) + self.minimumValue);
 		 
 		[self setValue:value forThumb:sender];
+        [self sendActionsForControlEvents:UIControlEventValueChanged];
+
 		// Resetting
         [recognizer setTranslation:CGPointZero inView:self];
     }
@@ -269,15 +261,6 @@ FloatRange FloatRangeMake(float min , float max)
 -(void) setActiveAreaBackgroundImage : (UIImage *) image
 {
 	self.activeAreaView.image = image;
-}
-
-- (void)dealloc
-{
-	[thumbOne release];
-	[thumbTwo release];
-	[trackBackgroundView release];
-	[activeAreaView release];
-    [super dealloc];
 }
 
 @end

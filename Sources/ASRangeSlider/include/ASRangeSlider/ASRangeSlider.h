@@ -7,8 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "SliderThumbView.h"
 
+@class SliderThumbView;
 
 /**
  *	This struct represents a range of floating-point values.
