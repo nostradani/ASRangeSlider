@@ -6,7 +6,7 @@
 // .
 //
 
-#import <ASRangeSlider/ASRangeSlider.h>
+#import <ASRangeSlider/ASRangeSliderView.h>
 #import <ASRangeSlider/SliderThumbView.h>
 #import "UIViewExtensions.h"
 
